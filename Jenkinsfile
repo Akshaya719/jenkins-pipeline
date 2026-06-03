@@ -1,25 +1,20 @@
 pipeline {
     agent any
 
-    options {
-        skipDefaultCheckout(true)
-    }
-
     environment {
         DOCKER_CREDS = credentials('05fc063d-4134-40be-967e-f69d1a218699')
     }
 
     stages {
 
-        stage('checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('clean workspace') {
             steps {
                 deleteDir()
+            }
+        }
+
+        stage('checkout') {
+            steps {
                 checkout scm
             }
         }
