@@ -6,13 +6,15 @@ pipeline {
     }
 
     stages {
-
+        // Option 1: Clean the workspace safely using cleanWs()
         stage('clean workspace') {
             steps {
-                deleteDir()
+                cleanWs() 
             }
         }
 
+        // Option 2: Manual checkout is optional, but if you keep it, 
+        // it will now work perfectly because .git structure isn't broken
         stage('checkout') {
             steps {
                 checkout scm
@@ -37,6 +39,13 @@ pipeline {
             steps {
                 sh 'docker push akshaya786/my-node-app:latest'
             }
+        }
+    }
+    
+    // Pro-Tip: Clean up the workspace after the build finishes (success or failure)
+    post {
+        always {
+            cleanWs()
         }
     }
 }
